@@ -1,0 +1,27 @@
+/* nav a  */
+body {background-color: rgb(233, 233, 233);
+/* This is the native font familly structure for bootstrap keeping this as I prefer it but manually defining
+to satisfy task requirement's. Arial is a fall back font.
+  https://getbootstrap.com/docs/5.0/content/reboot/#native-font-stack*/
+   font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue", Arial,"Noto Sans",
+  "Liberation Sans",sans-serif,"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  min-height: 100vh;
+}
+
+.site-container {
+    background-color: #fff;
+    margin: 40px auto;
+    padding: 36px;
+    box-shadow: 0px 0px 22px 0px rgb(0 0 0 / 75%);
+}
+
+footer a:link {color: #fff;}
+.flotbtn {transform: rotate(270deg);
+  
+}
+
+.Service-card:hover{
+  transform: scale(1.05);
+box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
