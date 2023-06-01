@@ -7,7 +7,6 @@ steps:
               "build",
               "-t",
               "gcr.io/$PROJECT_ID/sit737-docker-repo/web-ms:$TAG_NAME",
-              ".",
               "WebServer",
 
           ]
@@ -38,8 +37,7 @@ steps:
               "build",
               "-t",
               "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME",
-              ".",
-              AuthService,
+               "AuthService",
           ]
 
     # Docker Push
@@ -68,8 +66,7 @@ steps:
               "build",
               "-t",
               "gcr.io/$PROJECT_ID/sit737-docker-repo/data-ms:$TAG_NAME",
-              ".",
-              DataService,
+              "DataService",
           ]
 
     # Docker Push
