@@ -2,13 +2,10 @@ const express = require("express");
 require("dotenv").config();
 const app = express();
 const passport = require("passport");
-//const session = require("express-session");
-// require("./database");
 const User = require("./database");
 const auth = require("./auth");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { use } = require("chai");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -17,17 +14,21 @@ const jwtSecret = process.env.JWTSECRET;
 const saltRounds = 10;
 //Auth APi Routes
 app.post("/login", function (req, res, next) {
+    console.log(req.params);
     passport.authenticate(
         "local",
         { session: false },
         (err, username, info) => {
             if (err || !username) {
-                console.log(`${username}`);
-                return res.status(400).json({
-                    message: "That didn't work",
-                    username: username,
-                    info: info,
-                });
+                if (err == "Wrong Username" || err == "Wrong password") {
+                    return res.status(401);
+                } else {
+                    return res.status(400).json({
+                        message: "That didn't work",
+                        username: username,
+                        info: info,
+                    });
+                }
             }
             req.login(username, { session: false }, (err) => {
                 if (err) {
@@ -64,7 +65,7 @@ app.post("/createAccount", (req, res) => {
 
         User.findOne({ username: username }).then((user) => {
             if (user) {
-                console.log("user already exists");
+                console.log(`${user} user already exists`);
                 res.send("user already exists");
             } else {
                 //Validation
@@ -82,8 +83,8 @@ app.post("/createAccount", (req, res) => {
                     newUser.password = hash;
                     newUser
                         .save() //password is saved after encryption
-                        .then(res.send("User Created")) //user is redirected to the email verification page
-                        .catch((err) => console.log(err));
+                        .then(res.send("User Created"))
+                        .catch((err) => console.log(err), res.status(400).err);
                 });
             }
         });
@@ -93,12 +94,12 @@ app.post("/createAccount", (req, res) => {
     }
 });
 
-app.delete("/deleteAccount", (req, res) => {
+app.post("/deleteAccount", (req, res) => {
     try {
         const username = req.query.username;
+        console.log(username);
 
         User.deleteOne({ username: username }).then((user) => {
-            console.log(user);
             if (user.deletedCount == 0) {
                 console.log(`${username} not found`);
                 res.send(`${username} not found`);
@@ -118,7 +119,7 @@ app.post("/updatePassword", async (req, res) => {
         const username = req.query.username;
         const oldPassword = req.query.oldpassword;
         const newPassword = req.query.newpassword;
-
+        console.log(req.query);
         let returnedUser = await User.findOne({ username: username }); //find users in Mongo DB
         if (!returnedUser) {
             console.log(`${username} not found`);

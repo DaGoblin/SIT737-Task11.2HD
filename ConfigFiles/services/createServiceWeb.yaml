@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: web-ms   # Replace with the appropriate selector for your web-ms deployment
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4000   # Replace with the appropriate target port for your web-ms deployment

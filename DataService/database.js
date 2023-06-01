@@ -1,5 +1,3 @@
-const bcrypt = require("bcrypt");
-
 // //mongoDb connection
 require("dotenv").config();
 const mongoose = require("mongoose");
@@ -12,15 +10,26 @@ mongoose
     .then(() => console.log("MongoDB Connected Successfully!"))
     .catch((err) => console.log(err));
 
-const UserSchema = mongoose.Schema({
+const itemSchema = mongoose.Schema({
     username: {
         type: String,
         required: true,
     },
-    password: {
+    DeviceName: {
         type: String,
         required: true,
     },
+    DeviceType: {
+        type: String,
+        enum: {
+            values: ["Light", "Socket", "Doorbell", "Button"],
+            message: "{VALUE} is not a valid choice",
+        },
+    },
+    Manufacturer: {
+        type: String,
+        required: false,
+    },
 });
-const User = mongoose.model("User", UserSchema);
-module.exports = User;
+const itemDB = mongoose.model("itemDB", itemSchema);
+module.exports = itemDB;

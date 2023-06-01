@@ -35,10 +35,13 @@
                         <div class="navbar-collapse collapse flex-row-reverse" id="MainNavBar">
 
                             <ul class=" navbar-nav">
-                                <li class="nav-item active"> <a class="nav-link text-light " href="index.HTML">Home</a>
+                                <li class="nav-item active"> <a class="nav-link text-light " href="index.html">Home</a>
                                 </li>
                                 <li class="nav-item "> <a class="nav-link text-light " href="aboutus.html">About Us</a>
                                 </li>
+                                <li class="nav-item "> <a class="nav-link text-light " href="account.html">Account</a>
+                                <li class="nav-item "> <a class="nav-link text-light " href="#"
+                                        onclick=removeJWTToken()>Logout</a>
                             </ul>
                         </div>
                     </div>
@@ -55,23 +58,78 @@
                             <p class="card-text">
                                 <span style="font-size: 200%">W</span>elcome to Aussie Home Automation, your one-stop
                                 shop for all your home automation needs.
-                                use this stie to store keep a record of your home automation devices and automations. login to get started.
+                                use this stie to store keep a record of your home automation devices and automations.
+                                login to get started.
                             </p>
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <img src="Assets/HouseLights.jpg" class="img-fluid rounded-start"
-                            alt="">
+                        <img src="Assets/HouseLights.jpg" class="img-fluid rounded-start" alt="">
                     </div>
                 </div>
             </div>
+            <div class="card bg-light my-3">
+                <div class="row g-0">
+                    <form class="form visually-hidden" id="loginForm">
+                        <h3>Login to view data</h3>
+                        <div class="m-3 col-lg-4">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="username" class="form-control" id="username" aria-describedby="usernameHelp"
+                                name="username">
+                        </div>
+                        <div class="m-3 col-lg-4">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" aria-describedby="passwordHelp"
+                                name="password">
+                        </div>
+                        <button type="submit" class="btn btn-primary m-3">login</button>
+                </div>
+                </form>
+                <div class="row g-0">
+                    <form class="form visually-hidden" id="addItemForm">
+                        <div class="row">
+                            <div class="col">
+                                <label for="DeviceName" class="form-label ps-2">Device Name</label>
+                                <input type="text" class="form-control " name="DeviceName" id="DeviceName">
+                            </div>
+                            <div class="col">
+                                <label for="DeviceType" class="form-label ps-2">Device Type</label>
+                                <select class="form-control" id="DeviceType" name="DeviceType">
+                                    <option value="Light">Light</option>
+                                    <option value="Socket">Socket</option>
+                                    <option value="Doorbell">Doorbell</option>
+                                    <option value="Button">Button</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="Manufacturer" class="form-label ps-2">Manufacturer</label>
+                                <input type="text" class="form-control" name="Manufacturer">
+                            </div>
+                            <div class="col align-self-end">
+                                <button type="submit" id="addItemSubmit" class="btn btn-primary">Add Item</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row g-0">
+                    <div id="DeviceList" class="container visually-hidden">
+                        <h2>Device List</h2>
+                    </div>
+                </div>
 
 
+
+            </div>
         </div>
+
+
+    </div>
 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+
 </body>

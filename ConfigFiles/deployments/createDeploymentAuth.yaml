@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: auth-ms
+    labels:
+        app: auth-ms
+spec:
+    # modify replicas according to your case
+    replicas: 2
+    selector:
+        matchLabels:
+            app: auth-ms
+    template:
+        metadata:
+            labels:
+                app: auth-ms
+        spec:
+            containers:
+                - name: auth-ms
+                  image: gcr.io/atomic-sled-388523/auth-app:latest
+                  ports:
+                      - containerPort: 4000
+                  env:
+                      - name: PORT
+                        value: "4000"
+                      - name: MONGO_URI
+                        value: "mongodb+srv://DaGoblin:LearningDBAccess@cluster0.vy8qrqg.mongodb.net/?retryWrites=true&w=majority"
+                      - name: JWTSECRET
+                        valueFrom:
+                            secretKeyRef:
+                                key: password
+                                name: jwt-secret

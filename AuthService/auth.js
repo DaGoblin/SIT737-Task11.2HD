@@ -1,15 +1,16 @@
 var express = require("express");
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
+require("dotenv").config();
 var user = require("./database");
 const bcrypt = require("bcrypt");
 const passportJWT = require("passport-jwt");
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 
-
 passport.use(
     new LocalStrategy(function verify(username, password, done) {
+        console.log(username, password);
         user.findOne({ username: username }) //find users in Mongo DB
             .then((User) => {
                 if (!User) {
