@@ -12,9 +12,12 @@ steps:
               "gcr.io/$PROJECT_ID/sit737-docker-repo/web-ms:$TAG_NAME",
               "WebServer",
           ]
-    # Docker Push
+    # Docker Push Version Tag
     - name: "gcr.io/cloud-builders/docker"
       args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/web-ms:$TAG_NAME"]
+    # Docker Push latest Tag
+    - name: "gcr.io/cloud-builders/docker"
+      args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/web-ms:latest"]
 
     ################################################################################################
     #                                                                                              #
