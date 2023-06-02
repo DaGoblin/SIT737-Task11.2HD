@@ -17,17 +17,16 @@ spec:
         spec:
             containers:
                 - name: data-ms
-                  image: gcr.io/atomic-sled-388523/data-app:latest
+                  image: gcr.io/atomic-sled-388523/sit737-docker-repo/data-ms:latest
                   ports:
                       - containerPort: 4000
                   env:
                       - name: PORT
                         value: "4000"
-                      - name: MONGO_URI 
-                        value:  "mongodb+srv://DaGoblin:LearningDBAccess@cluster0.vy8qrqg.mongodb.net/?retryWrites=true&w=majority"
+                      - name: MONGO_URI
+                        value: "mongodb+srv://DaGoblin:LearningDBAccess@cluster0.vy8qrqg.mongodb.net/?retryWrites=true&w=majority"
                       - name: JWTSECRET
                         valueFrom:
                             secretKeyRef:
                                 key: password
                                 name: jwt-secret
-

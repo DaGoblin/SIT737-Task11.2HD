@@ -17,7 +17,7 @@ spec:
         spec:
             containers:
                 - name: web-ms
-                  image: gcr.io/atomic-sled-388523/web-app:latest
+                  image: gcr.io/atomic-sled-388523/sit737-docker-repo/web-ms:latest
                   ports:
                       - containerPort: 4000
                   env:

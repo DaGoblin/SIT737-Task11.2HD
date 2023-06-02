@@ -53,9 +53,22 @@ steps:
               "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME",
               "AuthService",
           ]
-    # Docker Push
+
+    # Docker Push Version Tag
     - name: "gcr.io/cloud-builders/docker"
-      args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME"]
+      args:
+          ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME"]
+    # Docker add latest Tag
+    - name: "gcr.io/cloud-builders/docker"
+      args:
+          [
+              "tag",
+              "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME",
+              "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:latest",
+          ]
+    # Docker Push latest Tag
+    - name: "gcr.io/cloud-builders/docker"
+      args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:latest"]
 
     ################################################################################################
     #                                                                                              #
@@ -84,9 +97,21 @@ steps:
               "gcr.io/$PROJECT_ID/sit737-docker-repo/data-ms:$TAG_NAME",
               "DataService",
           ]
-    # Docker Push
+    # Docker Push version Tag
     - name: "gcr.io/cloud-builders/docker"
       args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/data-ms:$TAG_NAME"]
+    # Docker add latest Tag
+    - name: "gcr.io/cloud-builders/docker"
+      args:
+          [
+              "tag",
+              "gcr.io/$PROJECT_ID/sit737-docker-repo/data-ms:$TAG_NAME",
+              "gcr.io/$PROJECT_ID/sit737-docker-repo/data-ms:latest",
+          ]
+    # Docker Push latest Tag
+    - name: "gcr.io/cloud-builders/docker"
+      args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/data-ms:latest"]
+
 
     ################################################################################################
     #                                                                                              #

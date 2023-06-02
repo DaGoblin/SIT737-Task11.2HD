@@ -17,7 +17,7 @@ spec:
         spec:
             containers:
                 - name: auth-ms
-                  image: gcr.io/atomic-sled-388523/auth-app:latest
+                  image: gcr.io/atomic-sled-388523/sit737-docker-repo/auth-ms:latest
                   ports:
                       - containerPort: 4000
                   env:
