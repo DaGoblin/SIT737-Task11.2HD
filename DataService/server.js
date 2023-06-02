@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
+const logger = require("./logger");
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
@@ -14,7 +15,7 @@ app.use("/", router);
 const PORT = process.env.PORT || 4000;
 var server = app.listen(
     PORT,
-    console.log("Server has started at port " + PORT)
+    logger.info("Server has started at port " + PORT)
 );
 
 module.exports = {

@@ -6,6 +6,7 @@ require("dotenv").config();
 const itemDB = require("./database");
 const auth = require("./auth");
 const jwt = require("jsonwebtoken");
+const logger = require("./logger");
 
 router.post(
     "/createItem",
@@ -26,10 +27,10 @@ router.post(
 
             newItem
                 .save() //password is saved after encryption
-                .then(res.send("Item Created"))
-                .catch((err) => console.log(err), res.status(400).err);
+                .then(logger.info("Item Created"), res.send("Item Created"))
+                .catch((err) => logger.error(err), res.status(400).err);
         } catch (error) {
-            console.error(error);
+            logger.error(error);
             res.status(500).json({ statuscode: 500, msg: error.toString() });
         }
     }
@@ -42,10 +43,11 @@ router.get(
         try {
             const username = req.user.username;
             itemDB.find({ username: username }).then((items) => {
+                logger.info("Items retrieved");
                 res.status(200).json(items);
             });
         } catch (error) {
-            console.error(error);
+            logger.error(error);
             res.status(500).json({ statuscode: 500, msg: error.toString() });
         }
     }
@@ -60,15 +62,17 @@ router.post(
             console.log(req.body.id);
             itemDB.findByIdAndDelete(req.body.id).then((item) => {
                 if (item == null) {
+                    logger.info("Item not found");
                     res.status(400).json({
                         statuscode: 400,
                         msg: "Item not found",
                     });
                 }
+                logger.info({ msg: "Item Deleted", item });
                 res.status(200).json({ msg: "Item Deleted", item });
             });
         } catch (error) {
-            console.error(error);
+            logger.error(error);
             res.status(500).json({ statuscode: 500, msg: error.toString() });
         }
     }

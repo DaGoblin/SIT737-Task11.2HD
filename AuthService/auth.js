@@ -7,14 +7,14 @@ const bcrypt = require("bcrypt");
 const passportJWT = require("passport-jwt");
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
+const logger = require("./logger");
 
 passport.use(
     new LocalStrategy(function verify(username, password, done) {
-        console.log(username, password);
         user.findOne({ username: username }) //find users in Mongo DB
             .then((User) => {
                 if (!User) {
-                    console.log("Wrong Username");
+                    logger.info("Wrong Username");
                     return done("Wrong Username");
                 }
 
@@ -26,7 +26,7 @@ passport.use(
                         };
                         return done(null, userDetails);
                     } else {
-                        console.log("Wrong password");
+                        logger.info("Wrong password");
                         return done("Wrong password");
                     }
                 });

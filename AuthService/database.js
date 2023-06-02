@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-
+const logger = require("./logger");
 // //mongoDb connection
 require("dotenv").config();
 const mongoose = require("mongoose");
@@ -9,7 +9,7 @@ uri = process.env.MONGO_URI;
 
 mongoose
     .connect(uri, { useUnifiedTopology: true, useNewUrlParser: true })
-    .then(() => console.log("MongoDB Connected Successfully!"))
+    .then(() => logger.info("MongoDB Connected Successfully!"))
     .catch((err) => console.log(err));
 
 const UserSchema = mongoose.Schema({

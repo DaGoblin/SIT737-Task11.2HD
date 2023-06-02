@@ -1,14 +1,15 @@
 // //mongoDb connection
 require("dotenv").config();
 const mongoose = require("mongoose");
+const logger = require("./logger");
 let uri;
 
 uri = process.env.MONGO_URI;
 
 mongoose
     .connect(uri, { useUnifiedTopology: true, useNewUrlParser: true })
-    .then(() => console.log("MongoDB Connected Successfully!"))
-    .catch((err) => console.log(err));
+    .then(() => logger.info("MongoDB Connected Successfully!"))
+    .catch((err) => logger.error(err));
 
 const itemSchema = mongoose.Schema({
     username: {

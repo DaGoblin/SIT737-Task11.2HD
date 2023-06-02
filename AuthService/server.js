@@ -6,6 +6,7 @@ const User = require("./database");
 const auth = require("./auth");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const logger = require("./logger");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -14,17 +15,23 @@ const jwtSecret = process.env.JWTSECRET;
 const saltRounds = 10;
 //Auth APi Routes
 app.post("/login", function (req, res, next) {
-    console.log(req.params);
+    
     passport.authenticate(
         "local",
         { session: false },
         (err, username, info) => {
             if (err || !username) {
                 if (err == "Wrong Username" || err == "Wrong password") {
+                    logger.error("Wrong Username or Password");
                     return res.status(401);
                 } else {
+                    logger.error({
+                        message: "Unknown Error",
+                        username: username,
+                        info: info,
+                    });
                     return res.status(400).json({
-                        message: "That didn't work",
+                        message: "Unknown Error",
                         username: username,
                         info: info,
                     });
@@ -32,10 +39,15 @@ app.post("/login", function (req, res, next) {
             }
             req.login(username, { session: false }, (err) => {
                 if (err) {
+                    logger.error({
+                        message: "Unknown Error",
+                        info: err,
+                    });
                     res.send(err);
                 }
                 // generate a signed json web token with the contents of user object and return it in the response
                 const token = jwt.sign(username, jwtSecret);
+                logger.info(`${username.username} logged in`);
                 return res.json({ token });
             });
         }
@@ -65,7 +77,7 @@ app.post("/createAccount", (req, res) => {
 
         User.findOne({ username: username }).then((user) => {
             if (user) {
-                console.log(`${user} user already exists`);
+                logger.error(`${user} user already exists`);
                 res.send("user already exists");
             } else {
                 //Validation
@@ -83,13 +95,16 @@ app.post("/createAccount", (req, res) => {
                     newUser.password = hash;
                     newUser
                         .save() //password is saved after encryption
-                        .then(res.send("User Created"))
-                        .catch((err) => console.log(err), res.status(400).err);
+                        .then(
+                            logger.info(`${username} User Created`),
+                            res.send(`${username} User Created`)
+                        )
+                        .catch((err) => logger.error(err), res.status(400).err);
                 });
             }
         });
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({ statuscode: 500, msg: error.toString() });
     }
 });
@@ -97,19 +112,19 @@ app.post("/createAccount", (req, res) => {
 app.post("/deleteAccount", (req, res) => {
     try {
         const username = req.query.username;
-        console.log(username);
+        
 
         User.deleteOne({ username: username }).then((user) => {
             if (user.deletedCount == 0) {
-                console.log(`${username} not found`);
+                logger.error(`${username} not found`);
                 res.send(`${username} not found`);
             } else {
-                console.log(`${username} Deleted`);
+                logger.info(`${username} Deleted`);
                 res.send(`${username} Deleted`);
             }
         });
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({ statuscode: 500, msg: error.toString() });
     }
 });
@@ -119,10 +134,10 @@ app.post("/updatePassword", async (req, res) => {
         const username = req.query.username;
         const oldPassword = req.query.oldpassword;
         const newPassword = req.query.newpassword;
-        console.log(req.query);
+        
         let returnedUser = await User.findOne({ username: username }); //find users in Mongo DB
         if (!returnedUser) {
-            console.log(`${username} not found`);
+            logger.info(`${username} not found`);
             res.send(`${username} not found`);
         }
 
@@ -136,16 +151,16 @@ app.post("/updatePassword", async (req, res) => {
                         saltRounds
                     );
                     await returnedUser.save();
-                    console.log(`${username} Password Updated`);
+                    logger.info(`${username} Password Updated`);
                     res.send(`${username} Password Updated`);
                 } else {
-                    console.log("Wrong password");
+                    logger.info("Wrong password");
                     res.send("Wrong password");
                 }
             }
         );
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({ statuscode: 500, msg: error.toString() });
     }
 });
@@ -154,7 +169,7 @@ const PORT = process.env.PORT || 4000;
 
 var server = app.listen(
     PORT,
-    console.log("Server has started at port " + PORT)
+    logger.info("Server has started at port " + PORT)
 );
 
 module.exports = {
