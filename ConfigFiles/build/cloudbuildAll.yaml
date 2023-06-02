@@ -15,6 +15,14 @@ steps:
     # Docker Push Version Tag
     - name: "gcr.io/cloud-builders/docker"
       args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/web-ms:$TAG_NAME"]
+    # Docker add latest Tag
+    - name: "gcr.io/cloud-builders/docker"
+      args:
+          [
+              "tag",
+              "gcr.io/$PROJECT_ID/sit737-docker-repo/web-ms:$TAG_NAME",
+              "gcr.io/$PROJECT_ID/sit737-docker-repo/web-ms:latest",
+          ]
     # Docker Push latest Tag
     - name: "gcr.io/cloud-builders/docker"
       args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/web-ms:latest"]
