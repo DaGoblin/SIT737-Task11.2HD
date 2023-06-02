@@ -31,6 +31,6 @@ spec:
                                 key: password
                                 name: jwt-secret
                       - name: AUTH_SERVICE
-                        value: "auth-ms:4000"
+                        value: "http://auth-ms:4000"
                       - name: DATA_SERVICE
-                        value: "data-ms:4000"
+                        value: "http://data-ms:4000"

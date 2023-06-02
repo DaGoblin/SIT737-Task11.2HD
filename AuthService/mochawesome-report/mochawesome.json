@@ -5,9 +5,9 @@
     "passes": 3,
     "pending": 0,
     "failures": 0,
-    "start": "2023-06-02T07:42:54.111Z",
-    "end": "2023-06-02T07:42:54.840Z",
-    "duration": 729,
+    "start": "2023-06-02T10:16:52.370Z",
+    "end": "2023-06-02T10:16:53.001Z",
+    "duration": 631,
     "testsRegistered": 3,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -18,7 +18,7 @@
   },
   "results": [
     {
-      "uuid": "d207ce4a-0fa0-4e11-a1b6-fd107870b445",
+      "uuid": "d2bd2d63-128b-4cb3-8bd9-00f48b491711",
       "title": "",
       "fullFile": "",
       "file": "",
@@ -28,7 +28,7 @@
           "title": "\"after all\" hook in \"{root}\"",
           "fullTitle": "\"after all\" hook in \"{root}\"",
           "timedOut": false,
-          "duration": 0,
+          "duration": 1,
           "state": null,
           "speed": null,
           "pass": false,
@@ -37,8 +37,8 @@
           "context": null,
           "code": "server.close(function () {\n    console.log(\"Server stopped\");\n    done();\n});",
           "err": {},
-          "uuid": "27b81763-da2b-434c-b6c0-cd98301b4866",
-          "parentUUID": "d207ce4a-0fa0-4e11-a1b6-fd107870b445",
+          "uuid": "44f01c54-e906-4510-9622-1db4aa83ac2d",
+          "parentUUID": "d2bd2d63-128b-4cb3-8bd9-00f48b491711",
           "isHook": true,
           "skipped": false
         }
@@ -46,7 +46,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "3a021971-32ae-4c01-a8a1-02aea4aaec45",
+          "uuid": "8b07a617-1b54-449c-a869-63d6263a9fb2",
           "title": "Test Account Creation",
           "fullFile": "C:\\Users\\phili\\OneDrive - Deakin University\\2023 TRI-1\\SIT737 - Cloud\\Tasks\\Task 11.2HD\\SIT737-Task11.2HD-Desktop\\AuthService\\test\\apptest.js",
           "file": "\\test\\apptest.js",
@@ -57,7 +57,7 @@
               "title": "Return status code 200 & User Created",
               "fullTitle": "Test Account Creation Return status code 200 & User Created",
               "timedOut": false,
-              "duration": 615,
+              "duration": 516,
               "state": "passed",
               "speed": "slow",
               "pass": true,
@@ -66,26 +66,26 @@
               "context": null,
               "code": "const response = await axios.post(url, null, {\n    params: {\n        username,\n        password,\n    },\n});\n//console.log(response);\nexpect(response.status).to.equal(200);\nexpect(response.data).to.equal(\"testuserAccount1 User Created\");",
               "err": {},
-              "uuid": "2f967265-7d39-40d6-b854-b61fa03d7647",
-              "parentUUID": "3a021971-32ae-4c01-a8a1-02aea4aaec45",
+              "uuid": "297d44ff-9f35-467a-a305-384523eadd59",
+              "parentUUID": "8b07a617-1b54-449c-a869-63d6263a9fb2",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "2f967265-7d39-40d6-b854-b61fa03d7647"
+            "297d44ff-9f35-467a-a305-384523eadd59"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 615,
+          "duration": 516,
           "root": false,
           "rootEmpty": false,
           "_timeout": 4000
         },
         {
-          "uuid": "06157e36-3a86-4dbc-966a-d4e4d84e3b78",
+          "uuid": "51a24618-f8f4-4674-b029-360177636c6d",
           "title": "Test login",
           "fullFile": "C:\\Users\\phili\\OneDrive - Deakin University\\2023 TRI-1\\SIT737 - Cloud\\Tasks\\Task 11.2HD\\SIT737-Task11.2HD-Desktop\\AuthService\\test\\apptest.js",
           "file": "\\test\\apptest.js",
@@ -96,7 +96,7 @@
               "title": "Return status code 200 & JWT",
               "fullTitle": "Test login Return status code 200 & JWT",
               "timedOut": false,
-              "duration": 79,
+              "duration": 78,
               "state": "passed",
               "speed": "slow",
               "pass": true,
@@ -105,26 +105,26 @@
               "context": null,
               "code": "const response = await axios.post(url, null, {\n    params: {\n        username,\n        password,\n    },\n});\nexpect(response.status).to.equal(200);\nexpect(response.data).to.have.property(\"token\");",
               "err": {},
-              "uuid": "d6bf5c41-0abe-41c3-a8de-fafdf1f55249",
-              "parentUUID": "06157e36-3a86-4dbc-966a-d4e4d84e3b78",
+              "uuid": "0e9a89a3-e915-4e01-841a-239e8e0440e0",
+              "parentUUID": "51a24618-f8f4-4674-b029-360177636c6d",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "d6bf5c41-0abe-41c3-a8de-fafdf1f55249"
+            "0e9a89a3-e915-4e01-841a-239e8e0440e0"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 79,
+          "duration": 78,
           "root": false,
           "rootEmpty": false,
           "_timeout": 4000
         },
         {
-          "uuid": "39e2e7fb-9738-466f-8a0f-559c923a25b1",
+          "uuid": "89b8c2b6-53b9-4a06-ae64-734fc03b4fb2",
           "title": "Test Delete account",
           "fullFile": "C:\\Users\\phili\\OneDrive - Deakin University\\2023 TRI-1\\SIT737 - Cloud\\Tasks\\Task 11.2HD\\SIT737-Task11.2HD-Desktop\\AuthService\\test\\apptest.js",
           "file": "\\test\\apptest.js",
@@ -135,7 +135,7 @@
               "title": "Return status code 200 & Account Deleted",
               "fullTitle": "Test Delete account Return status code 200 & Account Deleted",
               "timedOut": false,
-              "duration": 27,
+              "duration": 28,
               "state": "passed",
               "speed": "fast",
               "pass": true,
@@ -144,20 +144,20 @@
               "context": null,
               "code": "const response = await axios.post(url, null, {\n    params: {\n        username,\n    },\n});\nexpect(response.status).to.equal(200);\nexpect(response.data).include(\"testuserAccount1 Deleted\");",
               "err": {},
-              "uuid": "43c43c54-7289-4a07-acee-ce6ad3993c59",
-              "parentUUID": "39e2e7fb-9738-466f-8a0f-559c923a25b1",
+              "uuid": "89bcc7c5-02f4-40ee-9379-7272cb5c1f79",
+              "parentUUID": "89b8c2b6-53b9-4a06-ae64-734fc03b4fb2",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "43c43c54-7289-4a07-acee-ce6ad3993c59"
+            "89bcc7c5-02f4-40ee-9379-7272cb5c1f79"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 27,
+          "duration": 28,
           "root": false,
           "rootEmpty": false,
           "_timeout": 4000
