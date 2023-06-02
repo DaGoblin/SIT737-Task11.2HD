@@ -27,7 +27,7 @@ describe("Test Account Creation", () => {
         });
         //console.log(response);
         expect(response.status).to.equal(200);
-        expect(response.data).to.equal("User Created");
+        expect(response.data).to.equal("testuserAccount1 User Created");
     });
 });
 
