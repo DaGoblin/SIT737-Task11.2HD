@@ -137,8 +137,8 @@ steps:
           [
               "set",
               "image",
-              "deployment/web-ms",
-              "web-ms=gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME",
+              "deployment/auth-ms",
+              "auth-ms=gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME",
           ]
       env:
           - "CLOUDSDK_COMPUTE_ZONE=us-central1-c"
