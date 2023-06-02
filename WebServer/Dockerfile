@@ -6,7 +6,7 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY server.js routes.js ./
+COPY server.js routes.js logger.js ./
 COPY public ./public
 
 EXPOSE 4000
