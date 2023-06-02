@@ -1,9 +1,9 @@
 steps:
-################################################################################################
-#                                                                                              #
-# Web Microservice Build Docker & save Image                                                   #
-#                                                                                              #
-################################################################################################
+    ################################################################################################
+    #                                                                                              #
+    # Web Microservice Build Docker & save Image                                                   #
+    #                                                                                              #
+    ################################################################################################
     - name: "gcr.io/cloud-builders/docker"
       args:
           [
@@ -16,19 +16,19 @@ steps:
     - name: "gcr.io/cloud-builders/docker"
       args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/web-ms:$TAG_NAME"]
 
-
-################################################################################################
-#                                                                                              #
-# Auth Microservice Build Docker & save Image                                                  #
-#                                                                                              #
-################################################################################################
+    ################################################################################################
+    #                                                                                              #
+    # Auth Microservice Build Docker & save Image                                                  #
+    #                                                                                              #
+    ################################################################################################
 
     ##Test Build Runs Unit Tests
     - name: "gcr.io/cloud-builders/docker"
       args:
           [
               "build",
-              "--target test",
+              "--target",
+              "test",
               "-t",
               "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME",
               "AuthService",
@@ -38,7 +38,6 @@ steps:
       args:
           [
               "build",
-              "--target test",
               "-t",
               "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME",
               "AuthService",
@@ -47,12 +46,11 @@ steps:
     - name: "gcr.io/cloud-builders/docker"
       args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME"]
 
-
-################################################################################################
-#                                                                                              #
-# Auth Microservice Build Docker & save Image                                                  #
-#                                                                                              #
-################################################################################################
+    ################################################################################################
+    #                                                                                              #
+    # Data Microservice Build Docker & save Image                                                  #
+    #                                                                                              #
+    ################################################################################################
     # Data Microservice Update
     # Build Docker & save Image
     ##Test Build Runs Unit Tests
@@ -60,7 +58,8 @@ steps:
       args:
           [
               "build",
-              "--target test",
+              "--target",
+              "test",
               "-t",
               "gcr.io/$PROJECT_ID/sit737-docker-repo/data-ms:$TAG_NAME",
               "DataService",
@@ -78,12 +77,11 @@ steps:
     - name: "gcr.io/cloud-builders/docker"
       args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/data-ms:$TAG_NAME"]
 
-
-################################################################################################
-#                                                                                              #
-# Update Kubernetes deployments once all images are built successfully                         #
-#                                                                                              #
-################################################################################################
+    ################################################################################################
+    #                                                                                              #
+    # Update Kubernetes deployments once all images are built successfully                         #
+    #                                                                                              #
+    ################################################################################################
     #Web Server update image on Kubernetes deployment
     - name: "gcr.io/cloud-builders/kubectl"
       args:
