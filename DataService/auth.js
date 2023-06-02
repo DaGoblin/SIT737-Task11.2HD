@@ -15,7 +15,6 @@ passport.use(
             secretOrKey: jwtSecret,
         },
         function (jwtPayload, cb) {
-            console.log("jwtPayload", jwtPayload);
             let userDetails = {
                 id: jwtPayload.id,
                 username: jwtPayload.username,

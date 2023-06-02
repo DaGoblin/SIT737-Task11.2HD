@@ -1,13 +1,13 @@
 {
   "name": "webserver",
   "version": "1.0.0",
-  "description": "WebServer and gateway for the home automation app service",
+  "description": "data server for the home automation app service",
   "main": "server.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha test --timeout 4000 --reporter mochawesome --exit"
   },
   "repository": {
     "type": "git",
@@ -27,5 +27,10 @@
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "winston": "^3.9.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "mochawesome": "^7.1.3"
   }
 }

@@ -1,6 +1,9 @@
 steps:
-    # Web Microservice Update
-    # Build Docker & save Image
+################################################################################################
+#                                                                                              #
+# Web Microservice Build Docker & save Image                                                   #
+#                                                                                              #
+################################################################################################
     - name: "gcr.io/cloud-builders/docker"
       args:
           [
@@ -9,12 +12,79 @@ steps:
               "gcr.io/$PROJECT_ID/sit737-docker-repo/web-ms:$TAG_NAME",
               "WebServer",
           ]
-
     # Docker Push
     - name: "gcr.io/cloud-builders/docker"
       args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/web-ms:$TAG_NAME"]
 
-    #Update image on Kubernetes deployment
+
+################################################################################################
+#                                                                                              #
+# Auth Microservice Build Docker & save Image                                                  #
+#                                                                                              #
+################################################################################################
+
+    ##Test Build Runs Unit Tests
+    - name: "gcr.io/cloud-builders/docker"
+      args:
+          [
+              "build",
+              "--target test",
+              "-t",
+              "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME",
+              "AuthService",
+          ]
+    ## Production Build Final Image
+    - name: "gcr.io/cloud-builders/docker"
+      args:
+          [
+              "build",
+              "--target test",
+              "-t",
+              "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME",
+              "AuthService",
+          ]
+    # Docker Push
+    - name: "gcr.io/cloud-builders/docker"
+      args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME"]
+
+
+################################################################################################
+#                                                                                              #
+# Auth Microservice Build Docker & save Image                                                  #
+#                                                                                              #
+################################################################################################
+    # Data Microservice Update
+    # Build Docker & save Image
+    ##Test Build Runs Unit Tests
+    - name: "gcr.io/cloud-builders/docker"
+      args:
+          [
+              "build",
+              "--target test",
+              "-t",
+              "gcr.io/$PROJECT_ID/sit737-docker-repo/data-ms:$TAG_NAME",
+              "DataService",
+          ]
+
+    - name: "gcr.io/cloud-builders/docker"
+      args:
+          [
+              "build",
+              "-t",
+              "gcr.io/$PROJECT_ID/sit737-docker-repo/data-ms:$TAG_NAME",
+              "DataService",
+          ]
+    # Docker Push
+    - name: "gcr.io/cloud-builders/docker"
+      args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/data-ms:$TAG_NAME"]
+
+
+################################################################################################
+#                                                                                              #
+# Update Kubernetes deployments once all images are built successfully                         #
+#                                                                                              #
+################################################################################################
+    #Web Server update image on Kubernetes deployment
     - name: "gcr.io/cloud-builders/kubectl"
       args:
           [
@@ -27,52 +97,20 @@ steps:
           - "CLOUDSDK_COMPUTE_ZONE=us-central1-c"
           - "CLOUDSDK_CONTAINER_CLUSTER=task-11-2-cluster"
 
-    ################################################################################################
-    # Auth Microservice Update
-    # Build Docker & save Image
-    - name: "gcr.io/cloud-builders/docker"
-      args:
-          [
-              "build",
-              "-t",
-              "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME",
-              "AuthService",
-          ]
-
-    # Docker Push
-    - name: "gcr.io/cloud-builders/docker"
-      args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME"]
-
-    #Update image on Kubernetes deployment
+    #Auth Service update image on Kubernetes deployment
     - name: "gcr.io/cloud-builders/kubectl"
       args:
           [
               "set",
               "image",
-              "deployment/auth-ms",
-              "auth-ms=gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME",
+              "deployment/web-ms",
+              "web-ms=gcr.io/$PROJECT_ID/sit737-docker-repo/auth-ms:$TAG_NAME",
           ]
       env:
           - "CLOUDSDK_COMPUTE_ZONE=us-central1-c"
           - "CLOUDSDK_CONTAINER_CLUSTER=task-11-2-cluster"
 
-    ################################################################################################
-    # Data Microservice Update
-    # Build Docker & save Image
-    - name: "gcr.io/cloud-builders/docker"
-      args:
-          [
-              "build",
-              "-t",
-              "gcr.io/$PROJECT_ID/sit737-docker-repo/data-ms:$TAG_NAME",
-              "DataService",
-          ]
-
-    # Docker Push
-    - name: "gcr.io/cloud-builders/docker"
-      args: ["push", "gcr.io/$PROJECT_ID/sit737-docker-repo/data-ms:$TAG_NAME"]
-
-    #Update image on Kubernetes deployment
+    #Data Service update image on Kubernetes deployment
     - name: "gcr.io/cloud-builders/kubectl"
       args:
           [
@@ -84,3 +122,4 @@ steps:
       env:
           - "CLOUDSDK_COMPUTE_ZONE=us-central1-c"
           - "CLOUDSDK_CONTAINER_CLUSTER=task-11-2-cluster"
+################################################################################################

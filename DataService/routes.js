@@ -14,9 +14,9 @@ router.post(
         try {
             const { DeviceName, DeviceType, Manufacturer } = req.body;
             const username = req.user.username;
-            console.log(req.user);
-            console.log(DeviceName, DeviceType, Manufacturer);
-            console.log(req.body);
+            // console.log(req.user);
+            // console.log(DeviceName, DeviceType, Manufacturer);
+            // console.log(req.body);
             const newItem = new itemDB({
                 username,
                 DeviceName,
@@ -26,7 +26,7 @@ router.post(
 
             newItem
                 .save() //password is saved after encryption
-                .then(res.send("User Created"))
+                .then(res.send("Item Created"))
                 .catch((err) => console.log(err), res.status(400).err);
         } catch (error) {
             console.error(error);
@@ -36,7 +36,7 @@ router.post(
 );
 
 router.get(
-    "/getItems/",
+    "/getItems",
     passport.authenticate("jwt", { session: false }),
     (req, res) => {
         try {
@@ -59,8 +59,13 @@ router.post(
             const username = req.user.username;
             console.log(req.body.id);
             itemDB.findByIdAndDelete(req.body.id).then((item) => {
-               
-                res.status(200).json(item);
+                if (item == null) {
+                    res.status(400).json({
+                        statuscode: 400,
+                        msg: "Item not found",
+                    });
+                }
+                res.status(200).json({ msg: "Item Deleted", item });
             });
         } catch (error) {
             console.error(error);

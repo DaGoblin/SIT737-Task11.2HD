@@ -12,4 +12,11 @@ let router = require("./routes");
 app.use("/", router);
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, console.log("Server has started at port " + PORT));
+var server = app.listen(
+    PORT,
+    console.log("Server has started at port " + PORT)
+);
+
+module.exports = {
+    server: server,
+};
